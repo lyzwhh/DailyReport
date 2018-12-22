@@ -17,11 +17,11 @@ class CreateReportsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('tag1')->default('👋🐟');
-            $table->string('tag2');
-            $table->string('tag3');
+            $table->string('tag2')->nullable()->default(null);
+            $table->string('tag3')->nullable()->default(null);
 
             //TODO: 时间的表示方式
-            $table->integer('create_at');  // Carbon 日级规范
+            $table->string('date');  // Carbon 日级规范
         });
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'user'
 ],function (){
-    Route::post('register','User\UserController@register');
-    Route::post('login','User\UserController@login');
+    Route::post('register','UserController@register');
+    Route::post('login','UserController@login');
 
 });

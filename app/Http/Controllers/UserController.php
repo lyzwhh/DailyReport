@@ -6,11 +6,9 @@
  * Time: 20:36
  */
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
-use http\Env\Response;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Services\UserService;
 use App\Services\TokenService;
 
