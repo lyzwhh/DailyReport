@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function(){
             $time =Carbon::now();
-            ReportService::autoLoafing($time);
+            ReportService::autoLoafing($time->toDateString());
         })->everyMinute();
 
     }
