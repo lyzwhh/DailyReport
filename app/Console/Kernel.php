@@ -31,9 +31,9 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->call(function(){
-            $time =Carbon::now();
+            $time =Carbon::yesterday();
             ReportService::autoLoafing($time->toDateString());
-        })->everyMinute();
+        })->daily();
 
     }
 
