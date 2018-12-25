@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Services\PassService;
+use App\Services\ReportService;
 
 class ReportController extends Controller
 {
-    private $passService;
+    private $reportService;
 
-    public function __construct(PassService $passService)
+    public function __construct(ReportService $reportService)
     {
-        $this->passService = $passService;
+        $this->reportService = $reportService;
     }
 
     public function add(Request $request)
@@ -23,18 +23,29 @@ class ReportController extends Controller
         $reportInfo = $request->all();
         $time = Carbon::now();
         $reportInfo['date']=$time->toDateString();
-        $report = $this->passService->getThatDayReport($reportInfo);
+        $report = $this->reportService->getByDateUser($reportInfo['date'],$reportInfo['user']->id);
         if($report)
         {
-            $this->passService->update($reportInfo,$report->id);
+            $this->reportService->update($reportInfo,$report->id);
         }
         else
         {
-            $this->passService->add($reportInfo);
+            $this->reportService->add($reportInfo);
         }
         return response([
             'message' => '成功添加日报',
             'code' => 0
         ]);
     }
+
+    public function getByDay(string $day)
+    {
+        return response([
+            'reports'   =>  $this->reportService->getByDay($day),
+            'code'  =>  0
+        ]);
+    }
+
+
+
 }

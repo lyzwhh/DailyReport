@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Services\ReportService;
 
 class Kernel extends ConsoleKernel
 {
@@ -31,12 +32,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function(){
             $time =Carbon::now();
-            $data = [
-                'user_id' => -1,
-                'tag1' => 'minute',
-                'date' => $time->toDateString()
-            ];
-            DB::table('reports')->insert($data);
+            ReportService::autoLoafing($time);
         })->everyMinute();
 
     }
