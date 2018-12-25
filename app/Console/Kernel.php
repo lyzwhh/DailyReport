@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Kernel extends ConsoleKernel
 {
@@ -29,9 +30,11 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->call(function(){
+            $time =Carbon::now();
             $data = [
                 'user_id' => -1,
-                'tag1' => 'minute'
+                'tag1' => 'minute',
+                'date' => $time->toDateString()
             ];
             DB::table('reports')->insert($data);
         })->everyMinute();
