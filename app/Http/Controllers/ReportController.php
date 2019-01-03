@@ -41,7 +41,7 @@ class ReportController extends Controller
     public function getByDate(string $date)
     {
         return response([
-            'reports'   =>  $this->reportService->getByDate($date),
+            'data'   =>  $this->reportService->getByDate($date),
             'code'  =>  0
         ]);
     }
@@ -49,7 +49,7 @@ class ReportController extends Controller
     public function getByUser(string $name,int $limit,int $offset)
     {
         return response([
-            'reports'   =>  $this->reportService->getByUser($name,$limit,$offset),
+            'data'   =>  $this->reportService->getByUser($name,$limit,$offset),
             'code'  =>  0
         ]);
     }
