@@ -20,10 +20,10 @@ class Cors
         if ($response instanceof BinaryFileResponse) {
             return $response;
         }
-        $response->headers->set('Access-Control-Allow-Origin' , '*');
-        $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Cookie, Accept,token,tokenId,token_type,Accept,X-Requested-With');
-        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PATCH,DELETE,PUT, OPTIONS');
-        $response->headers->set('Access-Control-Allow-Credentials', 'true');
+        $response->header('Access-Control-Allow-Origin', '*');
+        $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Cookie, Accept,token,tokenId,token_type,Accept,X-Requested-With');
+        $response->header('Access-Control-Allow-Methods', 'GET, POST, PATCH,DELETE,PUT, OPTIONS');
+        $response->header('Access-Control-Allow-Credentials', 'true');
         return $response;
     }
 }
