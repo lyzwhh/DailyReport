@@ -32,7 +32,7 @@ class ReportController extends Controller
         {
             $this->reportService->add($reportInfo);
         }
-        return response([
+        return response()->json([
             'message' => '成功添加日报',
             'code' => 0
         ]);
