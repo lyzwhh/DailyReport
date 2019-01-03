@@ -12,5 +12,7 @@ Route::group([
 ],function (){
     Route::post('add','ReportController@add')->middleware('token');
     Route::get('date/{day}','ReportController@getByDay')->middleware('token');
+    Route::get('{name}/{limit}/{offset}','ReportController@getByUser')->middleware('token');
+
 
 });

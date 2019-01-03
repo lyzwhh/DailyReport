@@ -17,18 +17,35 @@ class ReportService
             ->where('date',$date)->where('user_id',$userId)->first();  //this id is user_id
         return $report;
     }
+
     public function getByDay($day)
     {
         $reports = DB::table('reports')
             ->where('date',$day)->get();
         return $reports;
     }
+
+    public function getByUser($name,$limit,$offset)
+    {
+        $id = DB::table('users')
+            ->where('name',$name)
+            ->pluck('id');
+        $reports = DB::table('reports')
+            ->orderBy('date', 'desc')
+            ->where('user_id',$id)
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+        return $reports;
+    }
+
     public function add($info)
     {
         $info['user_id'] = $info['user']->id;
         unset($info['user']);
         DB::table('reports')->insert($info);
     }
+
     public function update($info,$id)
     {
         unset($info['user']);

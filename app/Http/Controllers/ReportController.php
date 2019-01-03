@@ -46,6 +46,12 @@ class ReportController extends Controller
         ]);
     }
 
-
+    public function getByUser(string $name,int $limit,int $offset)
+    {
+        return response([
+            'reports'   =>  $this->reportService->getByUser($name,$limit,$offset),
+            'code'  =>  0
+        ]);
+    }
 
 }
