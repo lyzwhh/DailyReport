@@ -65,4 +65,12 @@ class ReportController extends Controller
         ]);
     }
 
+    public function getWeeklySegmentation()
+    {
+        return response([
+            'data'  =>  $this->reportService->getWeeklySegmentation(),
+            'code'  =>0
+        ]);
+    }
+
 }

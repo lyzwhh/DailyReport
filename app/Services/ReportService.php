@@ -14,12 +14,15 @@ use Fukuball\Jieba\Finalseg;
 use Fukuball\Jieba\Jieba;
 class ReportService
 {
+    private static $weeklySegmentation;
     public function __construct()    //一个都不能少
     {
         JiebaAnalyse::init();
         Jieba::init(array('mode'=>'test','dict'=>'small'));
         Finalseg::init();
+//        self::$weeklySegmentation = 250;
     }
+
 
     public function getByDateUser($date,$userId)  //one user
     {
@@ -79,12 +82,8 @@ class ReportService
             }
         }
     }
-    public static function autoCountWeekly()
-    {
 
-    }
-
-    public function wordSegmentation($reports)
+    public static function wordSegmentation($reports)
     {
         $top_k = 10;
 
@@ -129,10 +128,28 @@ class ReportService
                 }
             }
 
-
         }
         return $tags;
+    }
 
+    //TODO : 潜在bug，定时任务不启动
+    public static function autoCountWeekly()
+    {
+        $head = new Carbon('last friday');
+        $tail = new Carbon('this friday');
+        $reports = DB::table('reports')->where('date','>=',$head->toDateString())
+            ->where('date','<',$tail->toDateString())->get();
+        self::$weeklySegmentation = self::wordSegmentation($reports);
+        arsort(self::$weeklySegmentation);
+    }
+
+    public function getWeeklySegmentation()
+    {
+        if (self::$weeklySegmentation == null)
+        {
+            self::autoCountWeekly();
+        }
+        return self::$weeklySegmentation;
     }
 
 }

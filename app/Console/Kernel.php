@@ -34,6 +34,9 @@ class Kernel extends ConsoleKernel
             $time =Carbon::yesterday();
             ReportService::autoLoafing($time->toDateString());
         })->daily();
+        $schedule->call(function(){
+            ReportService::autoCountWeekly();
+        })->weekly();
 
     }
 
