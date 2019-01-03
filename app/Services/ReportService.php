@@ -83,6 +83,14 @@ class ReportService
         }
     }
 
+
+    /*
+     * ============·结巴调教指南·==============
+     * 1. extractTags 函数修改
+     * 2.注释   ..\vendor\fukuball\jieba-php\src\class\Jieba.php   中所有的echo  ，否则将破坏输出格式，不被认为是json
+     *
+     */
+
     public static function wordSegmentation($reports)
     {
         $top_k = 10;
