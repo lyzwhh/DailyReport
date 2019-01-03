@@ -58,6 +58,7 @@ class ReportController extends Controller
     {
         $reports = $this->reportService->getByDate($date);
         $segmentation = $this->reportService->wordSegmentation($reports);
+        arsort($segmentation);
         return response([
             'data' => $segmentation,
             'code' => 0
