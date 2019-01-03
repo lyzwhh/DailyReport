@@ -9,8 +9,18 @@
 namespace App\Services;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Fukuball\Jieba\JiebaAnalyse;
+use Fukuball\Jieba\Finalseg;
+use Fukuball\Jieba\Jieba;
 class ReportService
 {
+    public function __construct()    //一个都不能少
+    {
+        JiebaAnalyse::init();
+        Jieba::init(array('mode'=>'test','dict'=>'small'));
+        Finalseg::init();
+    }
+
     public function getByDateUser($date,$userId)  //one user
     {
         $report = DB::table('reports')
@@ -18,10 +28,10 @@ class ReportService
         return $report;
     }
 
-    public function getByDay($day)
+    public function getByDate($date)
     {
         $reports = DB::table('reports')
-            ->where('date',$day)->get();
+            ->where('date',$date)->get();
         return $reports;
     }
 
@@ -68,6 +78,61 @@ class ReportService
                 DB::table('reports')->insert($data);
             }
         }
+    }
+    public static function autoCountWeekly()
+    {
+
+    }
+
+    public function wordSegmentation($reports)
+    {
+        $top_k = 10;
+
+        //TODO: 优化算法
+        $tags= [];
+        foreach ($reports as $report)
+        {
+            if($report->tag1 != null)
+            {
+                $tags1 = JiebaAnalyse::extractTags($report->tag1, $top_k);// extractTags 函数被我·修改为·返回频数而不是TF-IDF
+                foreach ($tags1 as $key => $value)
+                {
+                    if(empty($tags[$key]))
+                    {
+                        $tags[$key] = 0;
+                    }
+                    $tags[$key] += $value;
+                }
+            }
+            if($report->tag2 != null)
+            {
+                $tags2 = JiebaAnalyse::extractTags($report->tag2, $top_k);
+                foreach ($tags2 as $key => $value)
+                {
+                    if(empty($tags[$key]))
+                    {
+                        $tags[$key] = 0;
+                    }
+                    $tags[$key] += $value;
+                }
+            }
+            if($report->tag3 != null)
+            {
+                $tags3 = JiebaAnalyse::extractTags($report->tag3, $top_k);
+                foreach ($tags3 as $key => $value)
+                {
+                    if(empty($tags[$key]))
+                    {
+                        $tags[$key] = 0;
+                    }
+                    $tags[$key] += $value;
+                }
+            }
+
+
+        }
+        return $tags;
+
     }
 
 }

@@ -11,8 +11,9 @@ Route::group([
     'prefix' => 'report'
 ],function (){
     Route::post('add','ReportController@add')->middleware('token');
-    Route::get('date/{day}','ReportController@getByDay')->middleware('token');
-    Route::get('{name}/{limit}/{offset}','ReportController@getByUser')->middleware('token');
+    Route::get('date/{date}','ReportController@getByDate')->middleware('token');
+    Route::get('name/{name}/{limit}/{offset}','ReportController@getByUser')->middleware('token');
+    Route::get('frequency/date/{date}','ReportController@getDateSegmentation')->middleware('token');
 
 
 });

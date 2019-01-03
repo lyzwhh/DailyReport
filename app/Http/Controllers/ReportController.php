@@ -38,10 +38,10 @@ class ReportController extends Controller
         ]);
     }
 
-    public function getByDay(string $day)
+    public function getByDate(string $date)
     {
         return response([
-            'reports'   =>  $this->reportService->getByDay($day),
+            'reports'   =>  $this->reportService->getByDate($date),
             'code'  =>  0
         ]);
     }
@@ -51,6 +51,16 @@ class ReportController extends Controller
         return response([
             'reports'   =>  $this->reportService->getByUser($name,$limit,$offset),
             'code'  =>  0
+        ]);
+    }
+
+    public function getDateSegmentation(string $date)
+    {
+        $reports = $this->reportService->getByDate($date);
+        $segmentation = $this->reportService->wordSegmentation($reports);
+        return response([
+            'data' => $segmentation,
+            'code' => 0
         ]);
     }
 
