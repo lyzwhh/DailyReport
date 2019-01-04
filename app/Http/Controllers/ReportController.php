@@ -47,7 +47,7 @@ class ReportController extends Controller
         $reports = $this->reportService->getByDate($date);
         foreach ($reports as $report)
         {
-            $report->nickname = $this->userService->getNickNameByID($report->user_id);
+            $report->nickname = $this->userService->getNickNameByID($report->user_id)[0];
         }
         return response([
             'data'   =>  $reports,
