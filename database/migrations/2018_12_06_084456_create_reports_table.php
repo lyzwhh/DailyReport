@@ -16,7 +16,7 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('tag1')->default('👋🐟');
+            $table->string('tag1')->default('摸鱼');
             $table->string('tag2')->nullable()->default(null);
             $table->string('tag3')->nullable()->default(null);
 

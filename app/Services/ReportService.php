@@ -20,6 +20,7 @@ class ReportService
         JiebaAnalyse::init();
         Jieba::init(array('mode'=>'test','dict'=>'small'));
         Finalseg::init();
+        Jieba::loadUserDict('../public/dict.txt');
 //        self::$weeklySegmentation = 250;
     }
 
