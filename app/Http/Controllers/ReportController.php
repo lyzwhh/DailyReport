@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Services\ReportService;
+use App\Services\UserService;
 
 class ReportController extends Controller
 {
     private $reportService;
+    private $userService;
 
-    public function __construct(ReportService $reportService)
+    public function __construct(ReportService $reportService,
+                                UserService $userService)
     {
         $this->reportService = $reportService;
+        $this->userService = $userService;
     }
 
     public function add(Request $request)
@@ -40,8 +44,13 @@ class ReportController extends Controller
 
     public function getByDate(string $date)
     {
+        $reports = $this->reportService->getByDate($date);
+        foreach ($reports as $report)
+        {
+            $report->nickname = $this->userService->getNickNameByID($report->user_id);
+        }
         return response([
-            'data'   =>  $this->reportService->getByDate($date),
+            'data'   =>  $reports,
             'code'  =>  0
         ]);
     }

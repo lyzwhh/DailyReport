@@ -40,4 +40,10 @@ class UserService
             return $user->id;
     }
 
+    public function getNickNameByID($userID)
+    {
+        $nickName = DB::table('users')->where('id',$userID)->pluck('nickname');
+        return $nickName;
+    }
+
 }
