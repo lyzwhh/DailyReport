@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class TokenService
 {
-    public static $EXPIRE_TIME = 2;
+    public static $EXPIRE_TIME = 360;
 
     public function createToken($userId)
     {
